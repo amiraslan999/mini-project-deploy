@@ -48,9 +48,7 @@ const Products = async () => {
     <>
       <Container>
         <CreateProductModal />
-        <h1 className="text-4xl font-bold my-8">
-          Electric Guitar New Arrivals
-        </h1>
+        <h1 className="text-4xl font-bold my-8">Electric Guitar</h1>
 
         {/* {loading ? (
           <div
@@ -67,7 +65,6 @@ const Products = async () => {
                 <ProductCard key={product.id} product={product} />
               ))}
           </div>
-
           {/* <button
             className={`${
               disabled ? "hidden" : "block"
