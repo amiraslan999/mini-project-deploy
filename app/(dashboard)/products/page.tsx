@@ -48,11 +48,13 @@ const Products = async () => {
     <>
       <Container>
         <CreateProductModal />
-        <h1 className="text-4xl font-bold my-8">Electric Guitar</h1>
+        <h1 className="text-4xl font-bold my-8">
+          Electric Guitar New Arrivals
+        </h1>
 
         {/* {loading ? (
           <div
-            className="flex justify-center items-center my-20 
+            className="flex justify-center items-center my-20
           "
           >
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-purple-600"></div>
