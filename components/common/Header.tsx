@@ -1,11 +1,11 @@
 "use client";
 
 import Container from "@mui/material/Container";
-import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
-import Logo from "../../public/logo.svg";
 import { DropdownMenuRadioGroupDemo } from "../ui/dropdown";
 import { useRouter } from "next/navigation";
+import Logo from "@/public/logo.svg";
+import Image from "next/image";
 
 const Header = () => {
   const router = useRouter();
@@ -19,6 +19,8 @@ const Header = () => {
           </div>
           <div className="middle-side">
             <Image
+              width={120}
+              height={120}
               className="cursor-pointer transform translate-x-[-60px]"
               onClick={() => router.push("/")}
               src={Logo}

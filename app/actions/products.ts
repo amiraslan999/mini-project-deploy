@@ -24,6 +24,8 @@ export async function createProduct(newProduct: {
   });
 
   revalidatePath("/products");
+
+  return product;
 }
 
 export async function deleteProduct(id: string) {

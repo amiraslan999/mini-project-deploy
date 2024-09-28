@@ -1,10 +1,17 @@
 "use client";
 
 import { UploadButton } from "@/src/utils/uploadthing";
+import { ClientUploadedFileData } from "uploadthing/types";
 
 type Props = {
-  onUploadError: ((data: any) => void) | undefined;
-  onClientUploadComplete: ((data: any) => void) | undefined;
+  onUploadError: ((data: Error) => void) | undefined;
+  onClientUploadComplete?:
+    | ((
+        res: ClientUploadedFileData<{
+          uploadedBy: string;
+        }>[]
+      ) => Promise<void>)
+    | undefined;
 };
 
 export default function Uploader({

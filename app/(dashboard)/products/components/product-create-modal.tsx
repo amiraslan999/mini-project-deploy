@@ -23,7 +23,6 @@ export function CreateProductModal() {
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [products, setProducts] = useState<any[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -56,8 +55,6 @@ export function CreateProductModal() {
     };
 
     await createProduct(newProduct);
-
-    setProducts((prev) => [...prev, newProduct]);
 
     setForm({
       name: "",
@@ -170,7 +167,7 @@ export function CreateProductModal() {
             <div className="mt-4">
               <img
                 src={imagePreview}
-                alt="Image Preview"
+                alt="img Preview"
                 className="w-40 h-40 object-cover"
               />
             </div>
