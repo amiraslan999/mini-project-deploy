@@ -1,7 +1,12 @@
 import { PropsWithChildren } from "react";
+import TableLayout from "./components/filter";
 
 const ProductsLayout = ({ children }: PropsWithChildren) => {
-  return <div>{children}</div>;
+  return (
+    <>
+      <TableLayout>{children}</TableLayout>
+    </>
+  );
 };
 
 export default ProductsLayout;

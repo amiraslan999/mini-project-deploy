@@ -13,6 +13,8 @@
     "@clerk/nextjs": "^5.5.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@headlessui/react": "^2.1.8",
+    "@heroicons/react": "^2.1.5",
     "@mui/material": "^6.1.0",
     "@prisma/client": "^5.19.1",
     "@radix-ui/react-dialog": "^1.1.1",

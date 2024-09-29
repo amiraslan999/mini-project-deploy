@@ -1,4 +1,4 @@
-import DeleteButton from "@/app/(dashboard)/products/components/product-delete";
+import DeleteButton from "@/app/(dashboard)/products/(list)/components/product-delete";
 import { ProductCardProps } from "@/types/type";
 import Link from "next/link";
 
@@ -36,7 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {product.inStock ? "In Stock" : "Out of Stock"}
         </p>
         <DeleteButton id={product.id} />
-        <Link href={`/products/product/${product.id}`}>
+        <Link href={`/products/${product.id}`}>
           <button className=" ml-5 rounded-md p-2 my-8 bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-indigo-600 hover:to-purple-600">
             Details
           </button>
