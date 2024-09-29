@@ -47,10 +47,12 @@ const Products = async () => {
   return (
     <>
       <Container>
-        <CreateProductModal />
-        <h1 className="text-4xl font-bold my-8">
-          Electric Guitar New Arrivals
-        </h1>
+        <div className="header-products flex items-center justify-between">
+          <h1 className="text-4xl font-bold my-8">
+            Electric Guitar New Arrivals
+          </h1>
+          <CreateProductModal />
+        </div>
 
         {/* {loading ? (
           <div
