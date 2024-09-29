@@ -12,6 +12,7 @@ import {
 import { UploadButton } from "@/src/utils/uploadthing";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { createProduct } from "@/app/actions/products";
+import Swal from "sweetalert2";
 
 export function CreateProductModal() {
   const [form, setForm] = useState({
@@ -22,6 +23,7 @@ export function CreateProductModal() {
     imageUrl: "",
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [fileUploaded, setFileUploaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,16 +56,38 @@ export function CreateProductModal() {
       image: form.imageUrl,
     };
 
-    await createProduct(newProduct);
+    try {
+      await createProduct(newProduct);
 
-    setForm({
-      name: "",
-      price: "",
-      description: "",
-      inStock: false,
-      imageUrl: "",
-    });
+      Swal.fire({
+        title: "Good job!",
+        text: "Product created successfully!",
+        icon: "success",
+      });
+
+      setForm({
+        name: "",
+        price: "",
+        description: "",
+        inStock: false,
+        imageUrl: "",
+      });
+      setImagePreview(null);
+      setFileUploaded(false);
+    } catch (error) {
+      console.error("Error creating product:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to create product.",
+        icon: "error",
+      });
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setForm((prev) => ({ ...prev, imageUrl: "" }));
     setImagePreview(null);
+    setFileUploaded(false);
   };
 
   return (
@@ -149,19 +173,30 @@ export function CreateProductModal() {
             />
           </div>
 
-          <UploadButton
-            endpoint="imageUploader"
-            onClientUploadComplete={(res) => {
-              if (res.length > 0) {
-                const imageUrl = res[0].url;
-                setForm((prev) => ({ ...prev, imageUrl }));
-                setImagePreview(imageUrl);
-              }
-            }}
-            onUploadError={(error) => {
-              console.error("Upload error:", error);
-            }}
-          />
+          {fileUploaded ? (
+            <button
+              type="button"
+              onClick={handleRemoveFile}
+              className="bg-red-600 text-white p-2 rounded-md"
+            >
+              Remove File
+            </button>
+          ) : (
+            <UploadButton
+              endpoint="imageUploader"
+              onClientUploadComplete={(res) => {
+                if (res.length > 0) {
+                  const imageUrl = res[0].url;
+                  setForm((prev) => ({ ...prev, imageUrl }));
+                  setImagePreview(imageUrl);
+                  setFileUploaded(true);
+                }
+              }}
+              onUploadError={(error) => {
+                console.error("Upload error:", error);
+              }}
+            />
+          )}
 
           {imagePreview && (
             <div className="mt-4">
