@@ -1,4 +1,4 @@
-import DeleteButton from "@/app/(client)/products/(list)/components/product-delete";
+import DeleteButton from "@/app/(admin)/products/(list)/components/product-delete";
 import { ProductCardProps } from "@/types/type";
 import Link from "next/link";
 
