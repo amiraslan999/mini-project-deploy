@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Logo from "@/public/logo.svg";
 import Image from "next/image";
 
-const Header = () => {
+const Header = async () => {
   const router = useRouter();
 
   return (

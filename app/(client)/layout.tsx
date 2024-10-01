@@ -2,7 +2,7 @@ import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
 import { PropsWithChildren } from "react";
 
-const DashboardLayout = ({ children }: PropsWithChildren) => {
+const ClientLayout = ({ children }: PropsWithChildren) => {
   return (
     <>
       <Header />
@@ -12,4 +12,4 @@ const DashboardLayout = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default DashboardLayout;
+export default ClientLayout;
