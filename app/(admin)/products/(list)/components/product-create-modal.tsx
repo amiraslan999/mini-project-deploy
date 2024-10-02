@@ -93,7 +93,7 @@ export function CreateProductModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="my-8 bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-indigo-600 hover:to-purple-600">
+        <Button className=" mr-10 bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-indigo-600 hover:to-purple-600">
           Create Product
         </Button>
       </DialogTrigger>

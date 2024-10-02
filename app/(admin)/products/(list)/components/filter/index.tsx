@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -19,16 +19,17 @@ import {
   FunnelIcon,
   MinusIcon,
   PlusIcon,
-  Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { Container } from "@mui/material";
+import { CreateProductModal } from "../product-create-modal";
+import { SortOrder } from "@/types";
+import qs from "query-string";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
+  { name: "Newest", slug: SortOrder.DATE_ASC, current: true },
+  { name: "Price: Low to High", slug: SortOrder.PRICE_ASC, current: false },
+  { name: "Price: High to Low", slug: SortOrder.PRICE_DESC, current: false },
 ];
 const subCategories = [
   { name: "Totes", href: "#" },
@@ -81,6 +82,24 @@ function classNames(...classes: string[]) {
 
 export default function TableLayout({ children }: PropsWithChildren) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const sortOrder = searchParams.get("sort");
+  const [selectedSortOrder, setSelectedSortOrder] = useState<SortOrder | null>(
+    sortOrder as SortOrder
+  );
+
+  function handleSortChange(sortOrder: SortOrder) {
+    setSelectedSortOrder(sortOrder);
+    const query = {
+      sort: sortOrder,
+    };
+    const url = qs.stringifyUrl({
+      url: "/products",
+      query,
+    });
+    router.push(url);
+  }
 
   return (
     <Container>
@@ -104,6 +123,7 @@ export default function TableLayout({ children }: PropsWithChildren) {
               >
                 <div className="flex items-center justify-between px-4">
                   <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+
                   <button
                     type="button"
                     onClick={() => setMobileFiltersOpen(false)}
@@ -186,10 +206,14 @@ export default function TableLayout({ children }: PropsWithChildren) {
           </Dialog>
 
           <main className=" max-w-7xl">
-            <div className="flex items-baseline border-b border-gray-200 pb-6 pt-10 justify-end">
+            <div className="flex items-center border-b border-gray-200 pb-6 pt-10 justify-between">
+              <h1 className="text-4xl font-bold">
+                Electric Guitar New Arrivals
+              </h1>
               <div className="flex items-center">
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
+                    <CreateProductModal />
                     <MenuButton className="group  inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                       Sort
                       <ChevronDownIcon
@@ -206,30 +230,23 @@ export default function TableLayout({ children }: PropsWithChildren) {
                     <div className="py-1">
                       {sortOptions.map((option) => (
                         <MenuItem key={option.name}>
-                          <a
-                            href={option.href}
+                          <button
+                            style={{ width: "100%" }}
+                            onClick={() => handleSortChange(option.slug)}
                             className={classNames(
-                              option.current
-                                ? "font-medium text-gray-900"
+                              option.slug === selectedSortOrder
+                                ? " font-medium text-gray-900"
                                 : "text-gray-500",
                               "block px-4 py-2 text-sm data-[focus]:bg-gray-100"
                             )}
                           >
                             {option.name}
-                          </a>
+                          </button>
                         </MenuItem>
                       ))}
                     </div>
                   </MenuItems>
                 </Menu>
-
-                <button
-                  type="button"
-                  className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-                >
-                  <span className="sr-only">View grid</span>
-                  <Squares2X2Icon aria-hidden="true" className="h-5 w-5" />
-                </button>
                 <button
                   type="button"
                   onClick={() => setMobileFiltersOpen(true)}
@@ -260,7 +277,6 @@ export default function TableLayout({ children }: PropsWithChildren) {
                       </li>
                     ))}
                   </ul>
-
                   {filters.map((section) => (
                     <Disclosure
                       key={section.id}
@@ -289,7 +305,7 @@ export default function TableLayout({ children }: PropsWithChildren) {
                           {section.options.map((option, optionIdx) => (
                             <div
                               key={option.value}
-                              className="flex items-center"
+                              className="flex items-center w-full"
                             >
                               <input
                                 defaultValue={option.value}

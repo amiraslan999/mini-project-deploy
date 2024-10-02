@@ -4,12 +4,30 @@ import ProductCard from "@/components/ui/ProductCard";
 import { Container } from "@mui/material";
 // import { Product } from "@prisma/client";
 // import { useEffect, useState } from "react";
-import { CreateProductModal } from "./components/product-create-modal";
+
 import prisma from "@/lib/db";
+import { SortOrder } from "@/types";
 // import { getProductsWithPagination } from "@/app/actions/products";
 
-const Products = async () => {
-  const products = await prisma.product.findMany();
+type Props = {
+  searchParams: {
+    sort: SortOrder;
+  };
+};
+
+const Products = async ({ searchParams }: Props) => {
+  const orderBy: Record<string, string> = {};
+  if (searchParams.sort) {
+    const searchKey = searchParams.sort.split("_")[0];
+    const searchValue = searchParams.sort.split("_")[1];
+    orderBy[searchKey] = searchValue;
+  } else {
+    orderBy.createdAt = "desc";
+  }
+
+  const products = await prisma.product.findMany({
+    orderBy,
+  });
   // const [paginationData, setPaginationData] = useState<IPagination>({
   //   skip: 0,
   //   take: 4,
@@ -47,12 +65,7 @@ const Products = async () => {
   return (
     <>
       <Container>
-        <div className="header-products flex items-center justify-between">
-          <h1 className="text-4xl font-bold my-8">
-            Electric Guitar New Arrivals
-          </h1>
-          <CreateProductModal />
-        </div>
+        <div className="header-products flex items-center justify-between"></div>
 
         {/* {loading ? (
           <div

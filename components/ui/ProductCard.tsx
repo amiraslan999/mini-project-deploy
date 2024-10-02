@@ -18,7 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             product.inStock
               ? "group-hover:text-green-600"
               : "group-hover:text-red-600"
-          } transition-colors duration-300 h-[55px] overflow-auto`}
+          } transition-colors duration-300 h-[55px] overflow-hidden`}
         >
           {product.name}
         </h2>
