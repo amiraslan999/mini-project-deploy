@@ -1,6 +1,6 @@
 "use client";
 
-import { UploadButton } from "@/src/utils/uploadthing";
+import { UploadButton } from "@/utils/uploadthing";
 import { ClientUploadedFileData } from "uploadthing/types";
 
 type Props = {

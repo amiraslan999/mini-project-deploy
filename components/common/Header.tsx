@@ -6,6 +6,7 @@ import { DropdownMenuRadioGroupDemo } from "../ui/dropdown";
 import { useRouter } from "next/navigation";
 import Logo from "@/public/logo.svg";
 import Image from "next/image";
+import CartButton from "../ui/cart/CartButton";
 
 const Header = () => {
   const router = useRouter();
@@ -21,13 +22,14 @@ const Header = () => {
             <Image
               width={120}
               height={120}
-              className="cursor-pointer transform translate-x-[-60px]"
+              className="cursor-pointer"
               onClick={() => router.push("/")}
               src={Logo}
               alt="Main Logo"
             />
           </div>
           <div className="right-side flex items-center gap-x-5">
+            <CartButton />
             <UserButton />
           </div>
         </nav>

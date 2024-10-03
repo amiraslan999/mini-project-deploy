@@ -1,6 +1,7 @@
-import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { Webhook } from "svix";
+import prisma from "@/lib/db";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -48,12 +49,46 @@ export async function POST(req: Request) {
     });
   }
 
-  // Do something with the payload
-  // For this guide, you simply log the payload to the console
   const { id } = evt.data;
   const eventType = evt.type;
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-  console.log("Webhook body:", body);
+
+  switch (eventType) {
+    case "user.created":
+      const { first_name, last_name, image_url, id, email_addresses } =
+        payload.data;
+      const { email_address } = email_addresses[0];
+      await prisma.user.create({
+        data: {
+          externalId: id,
+          email: email_address,
+          firstName: first_name,
+          lastName: last_name,
+          imageUrl: image_url,
+          cart: {
+            create: {
+              items: {
+                create: [],
+              },
+            },
+          },
+        },
+      });
+      break;
+    case "user.updated":
+      break;
+    case "user.deleted":
+      await prisma.cart.delete({
+        where: {
+          userId: id,
+        },
+      });
+      await prisma.user.delete({
+        where: {
+          externalId: payload.data.id,
+        },
+      });
+      break;
+  }
 
   return new Response("", { status: 200 });
 }

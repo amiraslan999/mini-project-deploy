@@ -9,10 +9,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { UploadButton } from "@/src/utils/uploadthing";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { createProduct } from "@/app/actions/products";
 import Swal from "sweetalert2";
+import { UploadButton } from "@/utils/uploadthing";
 
 export function CreateProductModal() {
   const [form, setForm] = useState({
@@ -53,7 +53,7 @@ export function CreateProductModal() {
       price: Number(form.price),
       description: form.description,
       inStock: form.inStock,
-      image: form.imageUrl,
+      imageUrl: form.imageUrl,
     };
 
     try {
@@ -199,7 +199,7 @@ export function CreateProductModal() {
           )}
 
           {imagePreview && (
-            <div className="mt-4">
+            <div className="my-4">
               <img
                 src={imagePreview}
                 alt="img Preview"
