@@ -24,7 +24,7 @@ const ProductDetailPage = async ({ params }: { params: { id: string } }) => {
             <div className="w-full lg:w-1/2">
               <div className="overflow-hidden rounded-lg shadow-lg">
                 <img
-                  src={product.image}
+                  src={product.imageUrl}
                   alt={product.name}
                   className="w-full h-auto object-cover "
                 />
