@@ -17,7 +17,6 @@ export async function createProduct(newProduct: {
   price: number;
   description: string;
   inStock: boolean;
-  // image: string;
   imageUrl: string;
 }) {
   const product = await prisma.product.create({
