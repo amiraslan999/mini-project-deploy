@@ -93,22 +93,22 @@ export function CreateProductModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className=" mr-10 bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-indigo-600 hover:to-purple-600">
+        <Button className="mr-10 bg-gradient-to-r from-purple-700 to-indigo-800 text-white hover:from-indigo-600 hover:to-purple-700 p-3 rounded-lg shadow-lg">
           Create Product
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md bg-gradient-to-br from-gray-800 via-gray-900 to-black rounded-lg shadow-lg p-6">
+      <DialogContent className="sm:max-w-md bg-gradient-to-br from-gray-900 via-black to-gray-800 rounded-lg shadow-2xl p-8">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-gray-100 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
+          <DialogTitle className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-600 to-red-500">
             Create Product
           </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-5">
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-gray-300"
+              className="block text-sm font-semibold text-gray-300"
             >
               Name
             </label>
@@ -118,14 +118,14 @@ export function CreateProductModal() {
               name="name"
               value={form.name}
               onChange={handleChange}
-              className="mt-1 p-2 border border-gray-600 bg-gray-800 text-gray-100 rounded-md w-full"
+              className="mt-2 p-3 border border-gray-600 bg-gray-800 text-gray-100 rounded-md w-full focus:ring-2 focus:ring-purple-600"
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-5">
             <label
               htmlFor="price"
-              className="block text-sm font-medium text-gray-300"
+              className="block text-sm font-semibold text-gray-300"
             >
               Price
             </label>
@@ -135,14 +135,14 @@ export function CreateProductModal() {
               name="price"
               value={form.price}
               onChange={handleChange}
-              className="mt-1 p-2 border border-gray-600 bg-gray-800 text-gray-100 rounded-md w-full"
+              className="mt-2 p-3 border border-gray-600 bg-gray-800 text-gray-100 rounded-md w-full focus:ring-2 focus:ring-purple-600"
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-5">
             <label
               htmlFor="description"
-              className="block text-sm font-medium text-gray-300"
+              className="block text-sm font-semibold text-gray-300"
             >
               Description
             </label>
@@ -152,14 +152,14 @@ export function CreateProductModal() {
               name="description"
               value={form.description}
               onChange={handleChange}
-              className="mt-1 p-2 border border-gray-600 bg-gray-800 text-gray-100 rounded-md w-full"
+              className="mt-2 p-3 border border-gray-600 bg-gray-800 text-gray-100 rounded-md w-full focus:ring-2 focus:ring-purple-600"
             />
           </div>
 
-          <div className="mb-4 flex items-center space-x-2">
+          <div className="mb-5 flex items-center space-x-3">
             <label
               htmlFor="inStock"
-              className="text-sm font-medium text-gray-300"
+              className="text-sm font-semibold text-gray-300"
             >
               In Stock
             </label>
@@ -169,7 +169,7 @@ export function CreateProductModal() {
               name="inStock"
               checked={form.inStock}
               onChange={handleChange}
-              className="h-5 w-5 border border-gray-600 bg-gray-800 rounded-md text-purple-600"
+              className="h-6 w-6 border border-gray-600 bg-gray-800 rounded-md text-purple-600 focus:ring-2 focus:ring-purple-600"
             />
           </div>
 
@@ -177,7 +177,7 @@ export function CreateProductModal() {
             <button
               type="button"
               onClick={handleRemoveFile}
-              className="bg-red-600 text-white p-2 rounded-md"
+              className="bg-red-600 text-white p-2 rounded-md shadow-md hover:bg-red-700"
             >
               Remove File
             </button>
@@ -202,19 +202,19 @@ export function CreateProductModal() {
             <div className="my-4">
               <img
                 src={imagePreview}
-                alt="img Preview"
-                className="w-40 h-40 object-cover"
+                alt="Image Preview"
+                className="w-40 h-40 object-cover rounded-md border border-gray-700 shadow-lg"
               />
             </div>
           )}
 
-          {error && <div className="text-red-500 mt-2">{error}</div>}
+          {error && <div className="text-red-500 mt-3">{error}</div>}
 
           <DialogClose>
-            <div className="mb-4">
+            <div className="mt-6">
               <button
                 type="submit"
-                className="bg-gradient-to-r from-purple-700 to-pink-700 text-white p-2 rounded-md hover:from-pink-700 hover:to-purple-700 w-full"
+                className="bg-gradient-to-r from-purple-700 to-pink-700 text-white p-3 rounded-lg hover:from-pink-700 hover:to-purple-700 w-full shadow-xl transition-all duration-300"
               >
                 Create
               </button>

@@ -29,14 +29,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <p className="text-sm text-gray-600 mb-4 h-[60px] overflow-hidden">
           {product.description}
         </p>
-        <p
-          className={`text-sm font-medium ${
-            product.inStock ? "text-green-600" : "text-red-600"
-          }`}
-        >
-          {product.inStock ? "In Stock" : "Out of Stock"}
-        </p>
-        <AddToCartButton />
+        <div className="flex">
+          <p
+            className={`text-sm font-medium ${
+              product.inStock ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {product.inStock ? "In Stock" : "Out of Stock"}
+          </p>
+          <AddToCartButton productId={product.id} />
+        </div>
         <DeleteButton id={product.id} />
         <Link href={`/products/${product.id}`}>
           <button className=" ml-5 rounded-md p-2 my-8 bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-indigo-600 hover:to-purple-600">

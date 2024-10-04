@@ -100,3 +100,37 @@ export async function removeFromCart({ cartItemId }: { cartItemId: string }) {
 
   revalidatePath("/");
 }
+
+export async function increaseCartItem({ cartItemId }: { cartItemId: string }) {
+  const cartItem = await prisma.cartItem.findUnique({
+    where: { id: cartItemId },
+  });
+  if (!cartItem) throw new Error("Cart item not found");
+
+  await prisma.cartItem.update({
+    where: { id: cartItemId },
+    data: { quantity: cartItem.quantity + 1 },
+  });
+
+  revalidatePath("/");
+}
+
+export async function decreaseCartItem({ cartItemId }: { cartItemId: string }) {
+  const cartItem = await prisma.cartItem.findUnique({
+    where: { id: cartItemId },
+  });
+  if (!cartItem) throw new Error("Cart item not found");
+
+  if (cartItem.quantity > 1) {
+    await prisma.cartItem.update({
+      where: { id: cartItemId },
+      data: { quantity: cartItem.quantity - 1 },
+    });
+  } else {
+    await prisma.cartItem.delete({
+      where: { id: cartItemId },
+    });
+  }
+
+  revalidatePath("/");
+}
