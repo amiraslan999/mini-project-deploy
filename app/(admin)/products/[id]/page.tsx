@@ -1,4 +1,3 @@
-import { addToCart } from "@/app/actions/cart";
 import prisma from "@/lib/db";
 import { Container } from "@mui/material";
 
