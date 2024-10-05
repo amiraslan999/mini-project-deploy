@@ -37,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           >
             {product.inStock ? "In Stock" : "Out of Stock"}
           </p>
-          <AddToCartButton productId={product.id} />
+          {product.inStock && <AddToCartButton productId={product.id} />}
         </div>
         <DeleteButton id={product.id} />
         <Link href={`/products/${product.id}`}>

@@ -1,55 +1,44 @@
-// import Footer from "@/components/common/Footer";
-// import Header from "@/components/common/Header";
-// import Cart from "@/components/ui/cart";
-// import prisma from "@/lib/db";
-// import { auth } from "@clerk/nextjs/server";
-// import { PropsWithChildren } from "react";
-
-// const ClientLayout = async ({ children }: PropsWithChildren) => {
-//   const { userId } = auth();
-//   const user = await prisma.cart.findUnique({
-//     where: {
-//       externalId: userId!,
-//     },
-//   });
-//   const cartItems = await prisma.cartItem.findMany();
-//   return (
-//     <>
-//       <Header />
-//       <Cart />
-//       {children}
-//       <Footer />
-//     </>
-//   );
-// };
-
-// export default ClientLayout;
-
 import React, { PropsWithChildren } from "react";
-import { auth, clerkClient } from "@clerk/nextjs/server";
-
+import { auth } from "@clerk/nextjs/server";
 import Header from "@/components/common/Header";
 import prisma from "@/lib/db";
 import Footer from "@/components/common/Footer";
 import Cart from "@/components/ui/cart";
-import { SafeCart } from "@/types";
+import { redirect } from "next/navigation";
 
 const ClientLayout = async ({ children }: PropsWithChildren) => {
-  const { userId, sessionId } = auth();
-  const user = await prisma.user.findUnique({
-    where: {
-      externalId: userId!,
-    },
-  });
-  if (!user) {
-    console.log("User not found");
+  const { userId } = auth();
 
-    clerkClient().sessions.revokeSession(sessionId!);
+  // If there's no userId, redirect to login or display a message
+  if (!userId) {
+    console.error("No user ID found in session.");
+    redirect("/sign-in");
+    return null;
   }
 
+  const user = await prisma.user.findUnique({
+    where: {
+      externalId: userId,
+    },
+  });
+
+  if (!user) {
+    console.error("User not found in the database.");
+    return (
+      <>
+        <Header />
+        <div className="text-center p-4">
+          <p className="text-red-500">User not found. Please log in again.</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  // Fetch the user's cart
   const cart = await prisma.cart.findUnique({
     where: {
-      userId: user!.id,
+      userId: user.id,
     },
     include: {
       items: {
@@ -59,11 +48,23 @@ const ClientLayout = async ({ children }: PropsWithChildren) => {
       },
     },
   });
+
+  const totalItems = cart!.items.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
+  );
+
   return (
     <>
       <Header />
       {children}
-      <Cart cart={cart as SafeCart} />
+      {cart ? (
+        <Cart cart={cart} totalItems={totalItems} />
+      ) : (
+        <div className="text-center p-4">
+          <p className="text-gray-500">Your cart is empty.</p>
+        </div>
+      )}
       <Footer />
     </>
   );

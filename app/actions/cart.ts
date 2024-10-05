@@ -41,7 +41,13 @@ export async function getCartWithItems() {
   });
   if (!user?.cart) throw new Error("No cart found");
 
-  return user?.cart;
+  // Calculate the total quantity of items
+  const totalItems = user.cart.items.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
+
+  return { cart: user.cart, totalItems }; // Return both cart and totalItems
 }
 
 export async function addToCart({
